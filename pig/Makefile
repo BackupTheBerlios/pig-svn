@@ -5,7 +5,7 @@ all:
 	./pig
 clean:
 	- rm index.php Default.htm index.html
-	- rm bxs_*.css 
+	- rm bxs_*.css
 	- rm img/gen/*
 distclean: clean
 	@echo Reverting back to distribution state.
