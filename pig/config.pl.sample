@@ -40,6 +40,9 @@ our $img_gen		= 'img/gen';
 our $convert_args_thumb	= '-quality 50 -scale 300x300 -sharpen 1';
 
 # Convert args to generate the larger versions of images
+# Note: if you do not wish to create larger versions of the images simply
+# comment this line out, pig will make all the appropriate modifications to the
+# generated XHTML code.
 our $convert_args_big	= '-quality 60 -scale 800x800';
 
 # here you can set some variables whos contents will be directly printed out

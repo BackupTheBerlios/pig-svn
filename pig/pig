@@ -170,15 +170,19 @@ foreach our $dir (sort @img_src_dirs) {
 			&gen_dir_vars;
 			unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn') || (!-f $file) ) {
 				&gen_img_vars;
-				if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_${file}") {
-					system("convert $conf::convert_args_big \"${file}\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_${file}\"");
+				if (${conf::convert_args_big}) {
+					if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_${file}") {
+						system("convert ${conf::convert_args_big} \"${file}\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_${file}\"");
+					}
 				}
 				if (!-e "${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_${file}" ) {
-					system("convert $conf::convert_args_thumb \"${file}\" \"${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_${file}\"");
+					system("convert ${conf::convert_args_thumb} \"${file}\" \"${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_${file}\"");
 				}
-				print "\t<a href=\"${conf::img_gen}/${dir::underscore}_${file}\">\n";
-				print "\t\t<img src=\"${conf::img_gen}/thumb.${dir::underscore}_${file}\" alt=\"${dir::short} - ${img::short}\"/>\n";
-				print "\t</a>\n";
+				print "\t<a href=\"${conf::img_gen}/${dir::underscore}_${file}\">\n" if (${conf::convert_args_big});
+				print "\t\t" if (${conf::convert_args_big});
+				print "\t" if (!${conf::convert_args_big});
+				print "<img src=\"${conf::img_gen}/thumb.${dir::underscore}_${file}\" alt=\"${dir::short} - ${img::short}\"/>\n";
+				print "\t</a>\n" if (${conf::convert_args_big});
 			}
 		}
 		chdir "${conf::root}";
