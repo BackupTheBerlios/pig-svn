@@ -45,13 +45,18 @@ our $convert_args_thumb	= '-quality 50 -scale 300x300 -sharpen 1';
 # generated XHTML code.
 our $convert_args_big	= '-quality 60 -scale 800x800';
 
+# Boxes:
+#	bxs_d	: Boxes, Dark
+#	bxs_l	: Boxes, Light
+our $theme		= 'bxs_d'; 
+
 # By default pig dynamically allocates columns for images depending on the
 # user's browser window size, so if only one picture fits inside the window
 # only one picture will be displayed per column, this also means that if  10
 # pictures fit on a column 10 pictures are displayed on a column. This forces a
 # break to the upper-mark, not the lower mark, so the number here will be the
 # maximum of columns per row, not the minimum possible, set to 0 to have no
-# limit. 
+# limit.
 our $columns 		= '0';
 
 # here you can set some variables whos contents will be directly printed out
