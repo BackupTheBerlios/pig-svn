@@ -18,58 +18,57 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+#use strict;
+use Cwd;
 # Internally used, do not modify
 package conf;
 
 # This is used internally to determine the starting point of PIG, do not change
 # this unless you really know what you're doing.
-$root	 		= `pwd`; chomp $root;
-
-# ATTENTION: Currently the upload code is not reading this configuration file
-# due to it being written in shellscript ( due for rewrite ). so setting this
-# to anything other than the default will not work if you wish to use the
-# built-in upload feature
+my $root	= getcwd();
 
 # The source directory from which images are read.
-$img_src 		= 'img/src';
+my $img_src		= 'img/src';
+
 # Generated thumbnails and images go here
-$img_gen		= 'img/gen';
+my $img_gen		= 'img/gen';
 
 # Here you can directly manipulate the arguments passed to convert(1) during
 # the main loop 
 # Test: using 16 images -geometry took 2m:15si and -scale took 1m:21s
 # Convert args to generate thumbnails
-$convert_args_thumb	= '-quality 50 -scale 300x300 -sharpen 1';
+my $convert_args_thumb	= '-quality 50 -scale 300x300 -sharpen 1';
+
 # Convert args to generate the larger versions of images
-$convert_args_big	= '-quality 60 -scale 800x800';
+my $convert_args_big	= '-quality 60 -scale 800x800';
 
 # here you can set some variables whos contents will be directly printed out
 # into the appropriate places in the XHTML document.
-$title		= '';
-$h1		= '';
-$h2		= '';
-$address	= '';
+my $title		= '';
+my $h1			= '';
+my $h2			= '';
+my $address		= '';
 
 # FTP Section
-$ftp_host       = '';
-$ftp_port       = '';
-$ftp_user       = '';
-$ftp_password   = '';
+my $ftp_host		= '';
+my $ftp_port		= '';
+my $ftp_user		= '';
+my $ftp_password	= '';
 
 # The remote dir on the ftp server, if you want files to be placed in /foo then
 # enter '/foo' here, if you want all files in the root directory leave this
 # empty.
-$ftp_remote_dir = '';
+my $ftp_remote_dir	= '';
 
-$ftp_hash	= ''; # Boolean, displays progressbar on true
-$ftp_debug	= ''; # Boolean
+my $ftp_hash		= ''; # Boolean, displays progressbar on true
+my $ftp_debug		= ''; # Boolean
 
 # Anything put here will be printed after 'href="' and before 'style/css.php'
 # in the approprite sections within head pointing to the stylesheet, this means
 # that if you dont have PHP support on your webserver you can host your
 # stylesheets on a server which does. This is due for replacement due to it not
 # being a good idea of depending on php for something like a stylesheet.
-$css_prefix	= '';
+my $css_prefix		= '';
 
 # Although PIG is not dependent on any server-side langauge it can print out to
 # the top of the document some server-side code which will take care of sending
@@ -78,7 +77,7 @@ $css_prefix	= '';
 # optition ) and a Content-Type header saying that the document uses UTF-8 as
 # it's character set.
 # Avalible optition: 'PHP' , 'ASP'
-# If no option is supplied PIG will just print out pure-xhtml.
-$dynamic	= ''; 
+# If no option is supplied PIG will just print out pure XHTML 1.0.
+my $dynamic		= ''; 
 
 return 1;
