@@ -18,7 +18,9 @@ rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/cgi-bin/ /home/groups/pig/cgi-bi
 
 cd "${TMP}"
 chmod +x bin/make_package.sh
-./bin/make_package.sh
+cd pig/
+../bin/make_package.sh
+
 if [ ! -d "/home/groups/ftp/pub/pig/packages" ]; then
 	mkdir -p "/home/groups/ftp/pub/pig/packages"
 fi
