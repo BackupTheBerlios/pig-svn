@@ -50,12 +50,16 @@ $h1		= '';
 $h2		= '';
 $address	= '';
 
-# Upload - The code using this section has yet to be written
-$ftp_user	= '';
-$ftp_password	= ''; # Make sure to chmod this file correcly if you use this, 
-$ftp_host	= '';
-$ftp_port	= '';
+# FTP Section
+$ftp_host       = '';
+$ftp_port       = '';
+$ftp_user       = '';
+$ftp_password   = '';
+
 $ftp_remote_dir = '';
+
+$ftp_hash	= ''; # Boolean, displays progressbar on true
+$ftp_debug	= ''; # Boolean
 
 # Anything put here will be printed after 'href="' and before 'style/css.php'
 # in the approprite sections within head pointing to the stylesheet, this means
