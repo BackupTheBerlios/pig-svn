@@ -147,6 +147,9 @@ ul {
 	margin-bottom: 5px;
 }
 
+br {
+	clear: both;
+}
 a:link {color: $text[$i];}
 a:hover, a:hover:visited {
 	color: $text_hover[$i];

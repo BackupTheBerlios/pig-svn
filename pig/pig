@@ -194,8 +194,8 @@ foreach our $dir (@img_src_dirs) {
 				#${conf::columns}
 				unless ( ${conf::columns} == 0 ) {
 					if ($i % ${conf::columns} == 0) {
-						print "\t\t<br style=\"clear: both;\">\n" if (${conf::convert_args_big});
-						print "\t<br style=\"clear: both;\">\n" if (!${conf::convert_args_big});
+						print "\t\t<br/>\n" if (${conf::convert_args_big});
+						print "\t<br/>\n" if (!${conf::convert_args_big});
 					}
 				}
 			}
