@@ -118,9 +118,9 @@ sub gen_img_vars {
 	our $short = undef;
 	our $w = undef;
 	our $h = undef;
-
+	undef our $i if our $i = undef;
 	# Generate a version of $file that has no extention
-	(our $short = $main::file) =~ s/\.[^.]*$//g;
+	(our $short = $main::file[$i]) =~ s/\.[^.]*$//g;
 	
 	# Generate width/height from $dimensions, only one call is made to
 	# identify and then perl split() is used., however this makes the
@@ -166,7 +166,7 @@ foreach our $dir (@img_src_dirs) {
 		opendir(FILE_DIR, '.');
 		my @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
-		for ( my $i=0; $i <= ($#file_dir); $i++ ) {
+		for ( our $i=1; $i <= ($#file_dir); $i++ ) {
 			&gen_dir_vars;
 			unless ( ($file_dir[$i] eq '.') || ($file_dir[$i] eq '..') || ($file_dir[$i] eq '.svn') || (!-f $file_dir[$i]) ) {
 				&gen_img_vars;
@@ -186,7 +186,7 @@ foreach our $dir (@img_src_dirs) {
 				print "\t</a>\n" if (${conf::convert_args_big});
 				#${conf::columns}
 				unless ( ${conf::columns} == 0 ) {
-					if ($i % ${conf::columns} == 1) {
+					if ($i % ${conf::columns} == 0) {
 						print "\t\t<br style=\"clear: both;\">\n" if (${conf::convert_args_big});
 						print "\t<br style=\"clear: both;\">\n" if (!${conf::convert_args_big});
 					}
