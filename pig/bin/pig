@@ -76,47 +76,7 @@ print <<HEAD;
 <div class="Content">
 HEAD
 
-#<vorsprung> 1) get the directories in a array @directorynames=<*>
-#<vorsprung> 2) loop over the array for my $dir (@directorynames) {
-#<vorsprung> 3) split out the y/m/d and title my ($y,$m,$d,$t)=$dir=~/(\d+)-(\d+)-(\d+)\s(.+)/;
-#<vorsprung> hmm actually no that is overcomplicated
-#<vorsprung> 3) split out the date and title my ($date,$t)=$dir=~/(\d+-\d+-\d+)\s(.+)/;
-#<Jeedo> i want the formet one since i need to use the year, month, days and titles seperatly later
-#<vorsprung> store the dates and real dir names in a hash $dirnames{$date}=$dir;
-#<vorsprung> 4) loop through the years, months and days for my $y (2003..2004) { for my $m (1..12) { for my $d (1..31) {
-#<vorsprung> hmm actually no not quite like that
-#<vorsprung> you know
-#<Jeedo> shouldnt that be (00..12) and (00..31) since it is ISO dates?
-#<vorsprung> Jeedo, i think the best way is to split into y,m,d and store y,m,d seperately in a hash
-#<vorsprung> Jeedo, ie $date{$year}->{$month}->{$day}=$dirname
-#<vorsprung> Jeedo, then in the loop through the years, months and days use the exist() function to look each bit up
-#<vorsprung> so for my $year (2003..2005) { if (exists{$date{$year}) ) { print p($year); } else { next; } for my $mon (1..12) { if (exists($date{$year}->{$mon}
-
-#chdir('img/gen/');
-#$some_dir="img/gen/";
-
-#@directorynames = readdir('img/gen/'); for my $dir (@directorynames) { print "$dir"; }
-# 1) get the directories in a array @directorynames=<*>
-# 2) loop over the array for my $dir (@directorynames) {
-# <s> 3) split out the y/m/d and title my ($y,$m,$d,$t)=$dir=~/(\d+)-(\d+)-(\d+)\s(.+)/; </s>
-# 3) split out the date and title my ($date,$t)=$dir=~/(\d+-\d+-\d+)\s(.+)/;
-# 4) loop through the years, months and days for my $y (2003..2004) { for my $m (1..12) { for my $d (1..31) {
-
-# (my $date, my $text) = split(/\s+/, $dir, 2);
-# print "$date, $text";
-
-
-# First do some cleanup:
-#opendir(IMG_GEN_DIR, ${conf::img_gen});
-#my @file_dir = readdir(IMG_GEN_DIR);
-#closedir(IMG_GEN_DIR);
-#foreach my $file (sort @file_dir) {
-#	unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn')) {
-#	unlink "$file";
-#	}
-#}
-
-# Some subroutines
+# Subroutines
 
 # This subroutine generates modified versions of the $dir variable, it detects
 # if the $dir variable contains a ISO Date and makes appropriate modificatins 
