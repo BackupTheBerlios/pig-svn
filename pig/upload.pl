@@ -31,8 +31,36 @@ if (${conf::ftp_password} eq "" || !defined ${conf::ftp_password} ) {
 	${conf::ftp_password} = <STDIN>; chop ${conf::ftp_password};
 }
 
-my $ftp = Net::FTP->new("heim.simnet.is", Debug => 0);
+my $ftp = Net::FTP->new(
+	"heim.simnet.is",
+	Debug => 1,
+	Port => ${conf::ftp_port},
+	Hash => 1,
+);
 $ftp->login("${conf::ftp_user}","${conf::ftp_password}",'PIG@Pig.BerliOS.de');
+# First go to the root directory
+$ftp->type("A");
 $ftp->cwd("/");
-$ftp->get("PIG.png");
+$ftp->mkdir("${conf::ftp_remote_dir}", "RECURSE" );
+$ftp->cwd("${conf::ftp_remote_dir}");
+
+$ftp->put("index.php");
+$ftp->put("css.php");
+$ftp->mkdir("${conf::img_gen}", "RECURSE" );
+$ftp->cwd("${conf::img_gen}");
+# And now for uploading all the images in a for-loop
+chdir "${conf::img_gen}";
+# First we need to change to binary upload mode
+$ftp->type("I");
+
+opendir(FILE_DIR, '.');
+my @file_dir = readdir(FILE_DIR);
+closedir(FILE_DIR);
+
+foreach our $file (sort @file_dir) {
+	unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn')) {
+		$ftp->put("$file");
+	}
+}
+
 $ftp->quit; 
