@@ -1,0 +1,8 @@
+PIG needs Perl to run and ImageMagick to generate thumbnails, you can get the
+sourcecode from from perl.com and imagemagick.org if they're not included in
+your operating system or distribution.
+
+No attempt will be made to maintain any kind of documentation in the
+distributed tarball, documentation is avalable at http://pig.berlios.de/
+
+-Ævar Arnfjörð Bjarmason, 2004
