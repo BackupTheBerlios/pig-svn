@@ -3,8 +3,8 @@ all:
 	chmod +x ./pig
 	./pig > index.php
 install:
-	chmod +x ./upload.sh
-	./upload.sh
+	chmod +x ./upload.pl
+	./upload.pl
 clean:
 	rm index.* && \
 	rm img/gen/* || \
