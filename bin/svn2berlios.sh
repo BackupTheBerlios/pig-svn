@@ -20,7 +20,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 TMP="/tmp/pig"
-RSYNC_OPT="-r --delete --delete-after"
+HTDOCS="/home/groups/pig/htdocs"
+RSYNC_OPT="-r --delete --delete-after -v"
 
 # First clean out the temp directory
 rm -rf "${TMP}"
@@ -49,12 +50,24 @@ svn -q co svn://svn.berlios.de/pig/ ${TMP}/ &>/dev/null ||\
 svn -q co svn+ssh://svn.berlios.de/svnroot/repos/pig/ ${TMP}/
 fix_perms
 
-rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/ /home/groups/pig/htdocs/
+rsync $RSYNC_OPT --exclude=".svn" --exclude="sample/*" ${TMP}/htdocs/ $HTDOCS/
+
+# Making sample pagess.
+for i in 1 2; do
+	mkdir -p ${HTDOCS}/sample/${i}
+	rsync $RSYNC_OPT --exclude=".svn" \
+		--exclude="img/src" \
+		--exclude="img/gen" \
+		--exclude="config.pl" \
+		${TMP}/pig/ ${HTDOCS}/sample/$i
+	
+	cd ${HTDOCS}/sample/${i}/
+	make
+done
 
 # Make a new package for the ftp filearea.
-cd "${TMP}"
-cd pig/
 
+cd "${TMP}/pig/"
 tar -czf PIG-$(version).tar.gz \
 	--exclude='.svn' \
 	--exclude="doc/test" \
