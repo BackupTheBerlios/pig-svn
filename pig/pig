@@ -23,7 +23,7 @@ use strict;
 #use warnings;
 package main;
 
-require 'inc/config.pl';
+require 'config.pl';
 
 # There's more than one way to do it - Larry Wall
 #if ( $conf::dynamic eq 'php' || $conf::dynamic eq 'PHP' ) {
