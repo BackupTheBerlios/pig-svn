@@ -27,16 +27,12 @@ function version() {
 	echo "$(get_ver | head -n1)-$(get_ver | tail -n1)" | bc -l | tr -d '\n'
 }
 
-if [ "$(hostname)" = "Rancorwe" ]; then
-	svn up
-fi
+svn up
 
-cp /usr/portage/licenses/GPL-2 LICENCE
-tar -cvzf MPFV-$(version).tar.gz \
+tar -cvzf PIG-$(version).tar.gz \
 	--exclude='.svn' \
 	--exclude="doc/test" \
 	--exclude="index.*" \
 	--exclude="img/*/*" \
 	--exclude="MPFV-*.tar.gz" \
 	*
-rm LICENCE

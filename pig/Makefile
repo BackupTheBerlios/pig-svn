@@ -8,9 +8,6 @@ package:
 clean:
 	rm index.* && \
 	rm img/gen/* && \
-	rm MPFV-*.tar.gz || \
+	rm PIG-*.tar.gz || \
 	rm img/gen/* || \
-	rm MPFV-*tar.gz || \
-	rm MPFV.subversiondump
-dump:
-	svnadmin dump /home/svnroot/ | svndumpfilter include www/projects/MPFV/ > MPFV.subversiondump
+	rm PIG-*tar.gz
