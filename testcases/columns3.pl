@@ -26,6 +26,7 @@ print "Number of items in array: $#file_dir\n\n";
 # This is a testcase for the 'break every X items feature'
 # For this to work properly we have to start counting at '1
 #for ( my $i=1; $i<10 ; $i++ )  {
+#foreach our $i (@file_dir) {
 for ( my $i=0; $i <= ($#file_dir); $i++ ) {
 	print $file_dir[$i] . "\n"; 
 	unless ( $col == 0 ) {
