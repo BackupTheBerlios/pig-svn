@@ -2,15 +2,12 @@
 all:
 	@chmod +x ./pig
 	./pig > index.php
-install:
-	@chmod +x ./upload
-	./upload
 clean:
 	rm index.* && \
 	rm img/gen/* || \
 	rm img/gen/*
 distclean:
-	@echo Reverted back to distribution state.
+	@echo Reverting back to distribution state.
 	rm index.* && \
 	rm config.pl || \
 	rm config.pl && \
@@ -25,3 +22,6 @@ help:
 	@echo install:	runs ./upload
 	@echo clean:	removes all generated files
 	@echo distclean:	removes all generated files and all user inserted files.
+upload:
+	@chmod +x ./upload
+	./upload
