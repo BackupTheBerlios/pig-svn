@@ -41,29 +41,43 @@ PHP
 } else {
 	printf '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 }
-
 print <<HEAD;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>${conf::title}</title>
-	<meta name="generator" content="PIG - Perl Imagegallery Generator, Perl $]V"/>
+HEAD
+print "\t" . '<meta name="generator" content="PIG - Perl Imagegallery Generator, Perl '; printf "v%vd", $^V; print '"/>' . "\n";
+print <<HEAD;
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<link rel="stylesheet" type="text/css" href="${conf::css_prefix}bxs_d.css" title="Boxes - Dark" media="screen, projection"/>
-	<link rel="alternate stylesheet" type="text/css" href="${conf::css_prefix}bxs_l.css" title="Boxes - Light" media="screen, projection"/>
+HEAD
+if ( ${conf::theme} eq 'bxs_d' or ${conf::theme} eq '' ) {
+	print "\t" . '<link rel="stylesheet"' . ' ';
+} else {
+	print "\t" . '<link rel="alternate stylesheet"' . ' ';
+}
+print 'type="text/css" href="' . ${conf::css_prefix} . 'bxs_d.css" title="Boxes - Dark" media="screen, projection"/>' . "\n";
+
+if ( ${conf::theme} eq 'bxs_l' ) {
+	print "\t" . '<link rel="stylesheet"' . ' ';
+} else {
+	print "\t" . '<link rel="alternate stylesheet"' . ' ';
+}
+print 'type="text/css" href="'. ${conf::css_prefix} . 'bxs_l.css" title="Boxes - Light" media="screen, projection"/>' . "\n";
+print <<HEAD;
 </head>
 
 <body>
 
 HEAD
 unless (${conf::h1} eq "" || !defined ${conf::h1} ) {
-print "<h1>${conf::h1}</h1>\n\n";
+	print "<h1>${conf::h1}</h1>\n\n";
 }
 unless (${conf::h2} eq "" || !defined ${conf::h2} ) {
-print "<h2>${conf::h2}</h2>\n\n";
+	print "<h2>${conf::h2}</h2>\n\n";
 }
 
-print "<div class=\"Content\">\n";
+print "<div>\n";
 
 # Subroutines
 
