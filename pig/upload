@@ -3,7 +3,7 @@
 # PIG - Perl Imagegallery Generator
 #
 # Copyright (C) 2004: Ævar Arnfjörð Bjarmason
-# Ævar Arnfjörð Bjarmason <jeedo@users.sourceforge.net>, 2004
+# Ævar Arnfjörð Bjarmason <avar@users.berlios.de>, 2004
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ use strict;
 use Net::FTP;
 
 package upload;
+#use Net::FTP;
 require 'config.pl';
 
 # perldoc perlmodlib
