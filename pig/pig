@@ -25,10 +25,6 @@ package main;
 
 require 'config.pl';
 
-# There's more than one way to do it - Larry Wall
-#if ( $conf::dynamic eq 'php' || $conf::dynamic eq 'PHP' ) {
-#if ( lc($conf::dynamic) eq 'php' ) {
-#if ( "\L$conf::dynamic" eq 'php' ) {
 if ( $conf::dynamic =~ /php/i ) {
 print <<PHP;
 <?php
