@@ -169,7 +169,7 @@ foreach our $dir (sort @img_src_dirs) {
 	&gen_dir_vars;
 	# Entering the img/src/*/
 	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn')) {
-		chdir "img/src/${dir}/" || die "\tCannot chdir() to '$dir'; $!\n";
+		chdir "${conf::img_src}/${dir}/" || die "\tCannot chdir() to '$dir'; $!\n";
 		print "\n<h6 id=\"${dir::short_underscore}\">${dir::short_html}</h6>\n";
 
 		# Reading files in img/src/*/
