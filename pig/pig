@@ -65,12 +65,15 @@ print <<HEAD;
 
 <body>
 
-<h1>${conf::h1}</h1>
-
-<h2>${conf::h2}</h2>
-
-<div class="Content">
 HEAD
+unless (${conf::h1} eq "" || !defined ${conf::h1} ) {
+print "<h1>${conf::h1}</h1>\n\n";
+}
+unless (${conf::h2} eq "" || !defined ${conf::h2} ) {
+print "<h2>${conf::h2}</h2>\n\n";
+}
+
+print "<div class=\"Content\">\n";
 
 # Subroutines
 
