@@ -1,0 +1,76 @@
+#!/usr/bin/env perl
+#
+# PIG - Perl Imagegallery Generator
+#
+# Copyright (C) 2004: Ævar Arnfjörð Bjarmason
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or (at
+# your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+# Internally used, do not modify
+package conf;
+
+# This is used internally to determine the starting point of PIG, do not change
+# this unless you really know what you're doing.
+$root	 		= `pwd`; chomp $root;
+
+# ATTENTION: Currently the upload code is not reading this configuration file
+# due to it being written in shellscript ( due for rewrite ). so setting this
+# to anything other than the default will not work if you wish to use the
+# built-in upload feature
+
+# The source directory from which images are read.
+$img_src 		= 'img/src';
+# Generated thumbnails and images go here
+$img_gen		= 'img/gen';
+
+# Here you can directly manipulate the arguments passed to convert(1) during
+# the main loop 
+# Test: using 16 images -geometry took 2m:15si and -scale took 1m:21s
+# Convert args to generate thumbnails
+$convert_args_thumb	= '-quality 50 -scale 300x300 -sharpen 1';
+# Convert args to generate the larger versions of images
+$convert_args_big	= '-quality 60 -scale 800x800';
+
+# here you can set some variables whos contents will be directly printed out
+# into the appropriate places in the XHTML document.
+$title		= '';
+$h1		= '';
+$h2		= '';
+$address	= '';
+
+# Upload - The code using this section has yet to be written
+$ftp_user	= '';
+$ftp_host	= '';
+$ftp_port	= '';
+$ftp_remote_dir = '';
+
+# Anything put here will be printed after 'href="' and before 'style/css.php'
+# in the approprite sections within head pointing to the stylesheet, this means
+# that if you dont have PHP support on your webserver you can host your
+# stylesheets on a server which does. This is due for replacement due to it not
+# being a good idea of depending on php for something like a stylesheet.
+$css_prefix	= '';
+
+# Although PIG is not dependent on any server-side langauge it can print out to
+# the top of the document some server-side code which will take care of sending
+# some HTTP headers, first of all a header which sends the appropriate XHTML
+# MIME type if the browser supports it ( currently only works with the PHP
+# optition ) and a Content-Type header saying that the document uses UTF-8 as
+# it's character set.
+# Avalible optition: 'PHP' , 'ASP'
+# If no option is supplied PIG will just print out pure-xhtml.
+$dynamic	= ''; 
+
+return 1;
