@@ -48,7 +48,6 @@ rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/cgi-bin/ /home/groups/pig/cgi-bi
 
 # Make a new package for the ftp filearea.
 cd "${TMP}"
-chmod +x bin/make_package.sh
 cd pig/
 
 tar -czf PIG-$(version).tar.gz \
