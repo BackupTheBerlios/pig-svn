@@ -145,7 +145,7 @@ sub gen_img_vars {
 
 # Generate the unordered list:
 print "<ul>\n";
-opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}'; $!";
+opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
 my @img_src_dirs = readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
 foreach our $dir (sort @img_src_dirs) {
@@ -160,7 +160,7 @@ foreach our $dir (sort @img_src_dirs) {
 print "</ul>\n";
 
 # Open to the img/src/ directory and list it's contents
-opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}'; $!";
+opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
 my @img_src_dirs = readdir(IMG_SRC_DIR); 
 closedir(IMG_SRC_DIR);
 
