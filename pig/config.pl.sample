@@ -52,6 +52,7 @@ $address	= '';
 
 # Upload - The code using this section has yet to be written
 $ftp_user	= '';
+$ftp_password	= ''; # Make sure to chmod this file correcly if you use this, 
 $ftp_host	= '';
 $ftp_port	= '';
 $ftp_remote_dir = '';
