@@ -133,7 +133,7 @@ ul {
 	list-style-type: square;
 }
 
-.Content {
+div {
 	margin-left: 1em;
 	margin-right: 1em;
 	margin-bottom: 0;
