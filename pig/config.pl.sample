@@ -56,6 +56,9 @@ $ftp_port       = '';
 $ftp_user       = '';
 $ftp_password   = '';
 
+# The remote dir on the ftp server, if you want files to be placed in /foo then
+# enter '/foo' here, if you want all files in the root directory leave this
+# empty.
 $ftp_remote_dir = '';
 
 $ftp_hash	= ''; # Boolean, displays progressbar on true

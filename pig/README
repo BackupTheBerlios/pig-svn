@@ -2,7 +2,24 @@ PIG needs Perl to run and ImageMagick to generate thumbnails, you can get the
 sourcecode from from perl.com and imagemagick.org if they're not included in
 your operating system or distribution.
 
-No attempt will be made to maintain any kind of documentation in the
-distributed tarball, documentation is avalable at http://pig.berlios.de/
+Instructions:
 
--Ævar Arnfjörð Bjarmason, 2004
+Copy 'config.pl.sample' to 'config.pl' ( if you move it 'make distclean' won't
+work ). Then edit the variables in that file according to instructions there.
+
+Then place directories containing image files in $img_src as defined by 
+'config.pl', there are currently two limitations to this:
+	1. $img_src/ itself must not contain other files than directories.
+	2. $img_src/*/ must not contain other files than directories.
+Both these limitations are scheduled for removal, but currently you'll have to
+live with them.
+
+Now run 'make' and a 'index.php' file will be generated, to view it properly
+you'll have to do 'make install' if you're using a sever with FTP upload or
+manually transfer the files to a web server supporting PHP, this is because
+css.php still depends on PHP ( again this is due to be fixed ).
+
+Further documentation is avalible at http://pig.berlios.de/
+
+PIG is written by Ævar Arnfjörð Bjarmason, @copyleft 2004, for licence details
+see the file 'COPYING'
