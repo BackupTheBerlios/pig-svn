@@ -43,8 +43,7 @@ chmod -R 755 "${TMP}"
 # Checking out the repository and rsyncing proper files in it to the proper 
 # places
 svn -q co svn://svn.berlios.de/pig/ ${TMP}/
-rsync $RSYNC_OPT --exclude=".svn" --exclude="cgi-bin/" ${TMP}/htdocs/ /home/groups/pig/htdocs/
-rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/cgi-bin/ /home/groups/pig/cgi-bin/
+rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/ /home/groups/pig/htdocs/
 
 # Make a new package for the ftp filearea.
 cd "${TMP}"
