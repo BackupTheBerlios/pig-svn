@@ -150,7 +150,7 @@ print "</ul>\n";
 
 # Open to the img/src/ directory and list it's contents
 opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
-my @img_src_dirs = readdir(IMG_SRC_DIR); 
+my @img_src_dirs = readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
 
 # Sort the contents of img/src/ and generate some variables from it
@@ -163,7 +163,7 @@ foreach our $dir (sort @img_src_dirs) {
 
 		# Reading files in img/src/*/
 		opendir(FILE_DIR, '.');
-		my @file_dir = readdir(FILE_DIR);
+		my @file_dir = grep(( /\.png$/i && /\.gif$/i && /\.jp(e?g|e)$/i), readdir FILE_DIR);
 		closedir(FILE_DIR);
 		# This should be $file not $dir but since we need to use the $dir subroutine this is the easy way
 		foreach our $file (sort @file_dir) {
