@@ -46,8 +46,8 @@ $ftp->mkdir("${conf::ftp_remote_dir}", "RECURSE" );
 $ftp->cwd("${conf::ftp_remote_dir}");
 
 $ftp->put("index.php");
-$ftp->put("css_dark.css");
-$ftp->put("css_light.css");
+$ftp->put("bxs_d.css");
+$ftp->put("bxs_l.css");
 $ftp->mkdir("${conf::img_gen}", "RECURSE" );
 $ftp->cwd("${conf::img_gen}");
 # And now for uploading all the images in a for-loop
