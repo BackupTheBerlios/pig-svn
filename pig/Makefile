@@ -1,11 +1,12 @@
 #!/usr/bin/env sh
 all:
+	@chmod +x ./css.pl
+	./css.pl
 	@chmod +x ./pig
 	./pig > index.php
 clean:
-	rm index.* && \
-	rm img/gen/* || \
-	rm img/gen/*
+	rm index.* && rm bxs_*.css && rm img/gen/* || \
+	rm img/gen/* && rm bxs_*.css || rm bxs_*.css
 distclean:
 	@echo Reverting back to distribution state.
 	rm index.* && \

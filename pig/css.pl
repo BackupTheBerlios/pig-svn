@@ -1,18 +1,21 @@
 #!/usr/bin/env perl
-@text =		( '#b09032','#600', );
-@text_em = 	('#d0b254',"$text[1]",);
-@text_hover = 	('#b09032','#fff',);
-@fg = 		('#5F5944','#69c',);
-@bg = 		('#4b4633','#903',);
-@bg_hover = 	('#333','#444',);
-@bc = 		('#000','#303',);
-@bb =		('1px','5px',);
-@sb =		('1px','2.5px',);
-@img_fg = 	('#333','#fff',);
-@img_fg_hover =	("$fg[0]","$fg[1]",);
+
+@file		= ( 'bxs_d.css','bxs_l.css',	);
+@text		= ( '#b09032',	'#600',		);
+@text_em	= ( '#d0b254',	"$text[1]",	);
+@text_hover	= ( '#b09032',	'#fff',		);
+@fg		= ( '#5F5944',	'#69c',		);
+@bg		= ( '#4b4633',	'#903',		);
+@bg_hover	= ( '#333',	'#444',		);
+@bc		= ( '#000',	'#303',		);
+@bb		= ( '1px',	'5px',		);
+@sb		= ( '1px',	'2.5px',	);
+@img_fg		= ( '#333',	'#fff',		);
+@img_fg_hover	= ( "$fg[0]",	"$fg[1]",	);
 
 for ( $i=0; $i<$#bg + 1; $i++ ) {
-print <<CSS;
+open( OUTF, ">$file[$i]" ) or die("Can't open '$file[$i]' for writing: $!");
+print OUTF <<CSS;
 html, body {
 	margin: 0;
 	padding: 0;
@@ -153,4 +156,5 @@ img:focus, img:active {
 	background-color: $bg[$i];
 }
 CSS
+close(OUTF);
 }
