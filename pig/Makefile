@@ -5,17 +5,13 @@ all:
 	@chmod +x ./pig
 	./pig > index.php
 clean:
-	rm index.* && rm bxs_*.css && rm img/gen/* || \
-	rm img/gen/* && rm bxs_*.css || rm bxs_*.css
-distclean:
+	- rm index.* 
+	- rm bxs_*.css 
+	- rm img/gen/*
+distclean: clean
 	@echo Reverting back to distribution state.
-	rm index.* && \
-	rm config.pl || \
-	rm config.pl && \
-	rm img/gen/* || \
-	rm img/gen/* && \
-	rm img/src/* || \
-	rm img/src/*
+	- rm config.pl
+	- img/gen/*
 help:
 	@echo Help on using this makefile:
 	@echo
