@@ -166,25 +166,31 @@ foreach our $dir (@img_src_dirs) {
 		opendir(FILE_DIR, '.');
 		my @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
-		# This should be $file not $dir but since we need to use the $dir subroutine this is the easy way
-		foreach our $file (@file_dir) {
+		for ( my $i=0; $i <= ($#file_dir); $i++ ) {
 			&gen_dir_vars;
-			unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn') || (!-f $file) ) {
+			unless ( ($file_dir[$i] eq '.') || ($file_dir[$i] eq '..') || ($file_dir[$i] eq '.svn') || (!-f $file_dir[$i]) ) {
 				&gen_img_vars;
 				# Only generate a big picture if the convert_args_big option is set.
 				if (${conf::convert_args_big}) {
-					if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_${file}") {
-						system("convert ${conf::convert_args_big} \"${file}\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_${file}\"");
+					if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_$file_dir[$i]") {
+						system("convert ${conf::convert_args_big} \"$file_dir[$i]\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_$file_dir[$i]\"");
 					}
 				}
-				if (!-e "${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_${file}" ) {
-					system("convert ${conf::convert_args_thumb} \"${file}\" \"${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_${file}\"");
+				if (!-e "${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]" ) {
+					system("convert ${conf::convert_args_thumb} \"$file_dir[$i]\" \"${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]\"");
 				}
-				print "\t<a href=\"${conf::img_gen}/${dir::underscore}_${file}\">\n" if (${conf::convert_args_big});
+				print "\t<a href=\"${conf::img_gen}/${dir::underscore}_$file_dir[$i]\">\n" if (${conf::convert_args_big});
 				print "\t\t" if (${conf::convert_args_big});
 				print "\t" if (!${conf::convert_args_big});
-				print "<img src=\"${conf::img_gen}/thumb.${dir::underscore}_${file}\" alt=\"${dir::short} - ${img::short}\"/>\n";
+				print "<img src=\"${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]\" alt=\"${dir::short} - ${img::short}\"/>\n";
 				print "\t</a>\n" if (${conf::convert_args_big});
+				#${conf::columns}
+				unless ( ${conf::columns} == 0 ) {
+					if ($i % ${conf::columns} == 1) {
+						print "\t\t<br style=\"clear: both;\">\n" if (${conf::convert_args_big});
+						print "\t<br style=\"clear: both;\">\n" if (!${conf::convert_args_big});
+					}
+				}
 			}
 		}
 		chdir "${conf::root}";
