@@ -45,7 +45,7 @@ html, body {
 	background-color: $bg[$i];
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3 {
 	margin: 0;
 	text-align: center;
 	margin-left: 0.5em;
@@ -82,9 +82,10 @@ h2 {
 	color: $text[$i];
 }
 
-h6 {
+h3 {
 	font-size: 150%;
-	margin-left: 2em; margin-right: 2em;
+	margin-left: 1em; 
+	margin-right: 1em;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 5px;
@@ -116,13 +117,13 @@ h1 span:hover {
 	border: $bb[$i] solid $bc[$i];
 }
 
-h1 em, h2 em, h3 em, h4 em, h5 em, h6 em, address em {
+h1 span, h2 span, h3 span, address span {
 	color: $text_em[$i];
 	font-style: normal;
 	font-size: 120%;
 }
 
-h1 span em:hover, h2 em:hover, h3 em:hover, h4 em:hover, h5 em:hover, h6 em:hover, address em:hover {
+h1 span em:hover, h2 em:hover, h3 em:hover, address em:hover {
 	text-decoration: underline;
 }
 
@@ -160,9 +161,9 @@ a:visited {
 
 img, img:hover {
 	vertical-align: top;
-	margin-left: 1em;
-	margin-right: 1em;
-	margin-bottom: 1em;
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+	margin-bottom: 0.5em;
 }
 
 img {

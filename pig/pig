@@ -27,6 +27,7 @@ require 'config.pl';
 if ( $conf::dynamic =~ /php/i ) {
 print <<PHP;
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 echo ('<?xml version="1.0" encoding="UTF-8"?>'."\\n");
 ?>
 PHP
@@ -87,7 +88,7 @@ sub gen_dir_vars {
 	(our $short_underscore = $short) =~ s/\ /_/g;
 	(our $short_url = $short) =~ s/\ /%20/g;
 	# This is only needed in the short form
-	(our $short_html = $short) =~ s/(\w)(\w*)/<em>\U\1\L<\/em>\E\2/g;
+	(our $short_html = $short) =~ s/(\w)(\w*)/<span>\U\1\L<\/span>\E\2/g;
 	# Better but unimplemented version:
 	# echo "foo b ar" | perl -lne'map { @a = split( //, $_ ); print "<em>$a[0]</em>" . ( $a[1] ? "<small>$a[1]</small>": "") } split(/\s+/, $_);'
 
@@ -150,26 +151,27 @@ print "</ul>\n";
 
 # Open to the img/src/ directory and list it's contents
 opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
-my @img_src_dirs = readdir(IMG_SRC_DIR);
+my @img_src_dirs = sort readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
 
 # Sort the contents of img/src/ and generate some variables from it
-foreach our $dir (sort @img_src_dirs) {
+foreach our $dir (@img_src_dirs) {
 	&gen_dir_vars;
 	# Entering the img/src/*/
 	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn') || (!-d "${conf::img_src}/$dir") ) {
 		chdir "${conf::img_src}/${dir}/" || die "\tCannot chdir() to '$dir'; $!\n";
-		print "\n<h6 id=\"${dir::short_underscore}\">${dir::short_html}</h6>\n";
+		print "\n<h3 id=\"${dir::short_underscore}\">${dir::short_html}</h3>\n";
 
 		# Reading files in img/src/*/
 		opendir(FILE_DIR, '.');
-		my @file_dir = grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
+		my @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
 		# This should be $file not $dir but since we need to use the $dir subroutine this is the easy way
-		foreach our $file (sort @file_dir) {
+		foreach our $file (@file_dir) {
 			&gen_dir_vars;
 			unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn') || (!-f $file) ) {
 				&gen_img_vars;
+				# Only generate a big picture if the convert_args_big option is set.
 				if (${conf::convert_args_big}) {
 					if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_${file}") {
 						system("convert ${conf::convert_args_big} \"${file}\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_${file}\"");
