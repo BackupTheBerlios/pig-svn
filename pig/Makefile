@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 all:
-	chmod +x bin/pig
-	./bin/pig > index.php
+	chmod +x ./pig
+	./pig > index.php
 install:
 	bash bin/upload.sh
 clean:
