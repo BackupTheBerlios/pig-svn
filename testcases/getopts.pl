@@ -12,7 +12,7 @@ my $verbose	= undef;
 #my $verbose = '';
 GetOptions (
 	'times=i'	=> \$times,
-	'text=s' 	=> \$text,
+	'text=s'	=> \$text,
 	'verbose' 	=> \$verbose
 );
 
