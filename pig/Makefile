@@ -16,8 +16,8 @@ help:
 	@echo Help on using this makefile:
 	@echo
 	@echo all:		runs ./pig
-	@echo install:	runs ./upload
-	@echo clean:	removes all generated files
+	@echo install:		runs ./upload
+	@echo clean:		removes all generated files
 	@echo distclean:	removes all generated files and all user inserted files.
 upload:
 	@chmod +x ./upload
