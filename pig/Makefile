@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 all:
-	perl bin/make_index.pl > index.php
+	chmod +x bin/pig
+	./bin/pig > index.php
 install:
 	bash bin/upload.sh
 clean:
