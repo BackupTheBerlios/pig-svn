@@ -24,60 +24,77 @@ package main;
 
 require 'config.pl';
 
-if ( $conf::dynamic =~ /php/i ) {
-print <<PHP;
+my %outfiles = (
+	php 	=> 'index.php',
+	asp 	=> 'Default.asp',
+	html	=> 'index.html',
+);
+
+my $outf;
+if ( ${conf::dynamic} =~ /php/i ) {
+	$outf = $outfiles{"php"};
+} elsif ( ${conf::dynamic} =~ /asp/i ) {
+	$outf = $outfiles{"asp"};
+} else {
+	$outf = $outfiles{"html"};
+}
+
+open( OUTF, ">$outf" ) or die("Can't open '$outf' for writing: $!");
+
+if ( ${conf::dynamic} =~ /php/i ) {
+print OUTF <<PHP;
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 echo ('<?xml version="1.0" encoding="UTF-8"?>'."\\n");
 ?>
 PHP
-} elsif ( $conf::dynamic =~ /asp/i ) {
+} elsif ( ${conf::dynamic} =~ /asp/i ) {
 	# Would add this header, however this would add to the already existing
 	# Content-Type header, so if you're going to use the AddHeader function make
 	# sure the header doesnt exist already 
 	#<%Response.AddHeader "Content-Type","text/html; charset=UTF-8"%> 
-	print '<%Response.Charset="UTF-8"%>'."\n";
-	printf '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+	print OUTF '<%Response.Charset="UTF-8"%>'."\n";
+	printf OUTF '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 } else {
-	printf '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+	printf OUTF '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 }
-print <<HEAD;
+print OUTF <<HEAD;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>${conf::title}</title>
 HEAD
-print "\t" . '<meta name="generator" content="PIG - Perl Imagegallery Generator, Perl '; printf "v%vd", $^V; print '"/>' . "\n";
-print <<HEAD;
+print OUTF "\t" . '<meta name="generator" content="PIG - Perl Imagegallery Generator, Perl '; printf OUTF "v%vd", $^V; print OUTF '"/>' . "\n";
+print OUTF <<HEAD;
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 HEAD
 if ( ${conf::theme} eq 'bxs_d' or ${conf::theme} eq '' ) {
-	print "\t" . '<link rel="stylesheet"' . ' ';
+	print OUTF "\t" . '<link rel="stylesheet"' . ' ';
 } else {
-	print "\t" . '<link rel="alternate stylesheet"' . ' ';
+	print OUTF "\t" . '<link rel="alternate stylesheet"' . ' ';
 }
-print 'type="text/css" href="' . ${conf::css_prefix} . 'bxs_d.css" title="Boxes - Dark" media="screen, projection"/>' . "\n";
+print OUTF 'type="text/css" href="' . ${conf::css_prefix} . 'bxs_d.css" title="Boxes - Dark" media="screen, projection"/>' . "\n";
 
 if ( ${conf::theme} eq 'bxs_l' ) {
-	print "\t" . '<link rel="stylesheet"' . ' ';
+	print OUTF "\t" . '<link rel="stylesheet"' . ' ';
 } else {
-	print "\t" . '<link rel="alternate stylesheet"' . ' ';
+	print OUTF "\t" . '<link rel="alternate stylesheet"' . ' ';
 }
-print 'type="text/css" href="'. ${conf::css_prefix} . 'bxs_l.css" title="Boxes - Light" media="screen, projection"/>' . "\n";
-print <<HEAD;
+print OUTF 'type="text/css" href="'. ${conf::css_prefix} . 'bxs_l.css" title="Boxes - Light" media="screen, projection"/>' . "\n";
+print OUTF <<HEAD;
 </head>
 
 <body>
 
 HEAD
 unless (${conf::h1} eq "" || !defined ${conf::h1} ) {
-	print "<h1>${conf::h1}</h1>\n\n";
+	print OUTF "<h1>${conf::h1}</h1>\n\n";
 }
 unless (${conf::h2} eq "" || !defined ${conf::h2} ) {
-	print "<h2>${conf::h2}</h2>\n\n";
+	print OUTF "<h2>${conf::h2}</h2>\n\n";
 }
 
-print "<div>\n";
+print OUTF "<div>\n";
 
 # Subroutines
 
@@ -86,23 +103,26 @@ print "<div>\n";
 sub gen_dir_vars {
 	package dir;
 	# First undefine these variables which might be filled.
-	our $short = undef;
-	our $underscore = undef;
-	our $short_underscore = undef;
+	our $short 		= undef;
+	our $underscore 	= undef;
+	our $url 		= undef;
+	our $short_underscore	= undef;
+	our $short_url		= undef;
+	our $short_html		= undef;
 
 	# For dirs with ISO Dates in their names
 	if ($main::dir =~ /^\d{4}-\d{2}-\d{2}/) {	
-		(our $short = $main::dir) =~ s/^.{11}//; # s/^{11}//g;
+		($short = $main::dir) =~ s/^.{11}//; # s/^{11}//g;
 	# For the others
 	} else {
-		(our $short = $main::dir);
+		($short = $main::dir);
 	}
-	(our $underscore = $main::dir) =~ s/\ /_/g;
-	(our $url = $main::dir) =~ s/\ /%20/g;
-	(our $short_underscore = $short) =~ s/\ /_/g;
-	(our $short_url = $short) =~ s/\ /%20/g;
+	($underscore = $main::dir) =~ s/\ /_/g;
+	($url = $main::dir) =~ s/\ /%20/g;
+	($short_underscore = $short) =~ s/\ /_/g;
+	($short_url = $short) =~ s/\ /%20/g;
 	# This is only needed in the short form
-	(our $short_html = $short) =~ s/(\w)(\w*)/<span>\U\1\L<\/span>\E\2/g;
+	($short_html = $short) =~ s/(\w)(\w*)/<span>\U$1\L<\/span>\E$2/g;
 	# Better but unimplemented version:
 	# echo "foo b ar" | perl -lne'map { @a = split( //, $_ ); print "<em>$a[0]</em>" . ( $a[1] ? "<small>$a[1]</small>": "") } split(/\s+/, $_);'
 
@@ -132,9 +152,9 @@ sub gen_img_vars {
 	our $short = undef;
 	our $w = undef;
 	our $h = undef;
-	undef our $i if our $i = undef;
+	#undef our $i if our $i = undef;
 	# Generate a version of $file that has no extention
-	(our $short = $main::file[$i]) =~ s/\.[^.]*$//g;
+	($short = $main::file_dir[$main::i]) =~ s/\.[^.]*$//g;
 	
 	# Generate width/height from $dimensions, only one call is made to
 	# identify and then perl split() is used., however this makes the
@@ -148,7 +168,7 @@ sub gen_img_vars {
 }
 
 # Generate the unordered list:
-print "<ul>\n";
+print OUTF "<ul>\n";
 opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
 my @img_src_dirs = readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
@@ -158,14 +178,14 @@ foreach our $dir (sort @img_src_dirs) {
 		&gen_dir_vars;
 		# (my $date, my $text) = split(/\s+/, $dir, 2);
 		# print "$date, $text";
-		print "\t<li><a href=\"#${dir::short_underscore}\" title=\"${dir::short}\">$dir</a></li>\n";
+		print OUTF "\t<li><a href=\"#${dir::short_underscore}\" title=\"${dir::short}\">$dir</a></li>\n";
 	}
 }
-print "</ul>\n";
+print OUTF "</ul>\n";
 
 # Open to the img/src/ directory and list it's contents
 opendir(IMG_SRC_DIR, ${conf::img_src}) || die "\tCannot opendir() '${conf::img_src}' ($!)";
-my @img_src_dirs = sort readdir(IMG_SRC_DIR);
+@img_src_dirs = sort readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
 
 # Sort the contents of img/src/ and generate some variables from it
@@ -174,11 +194,11 @@ foreach our $dir (@img_src_dirs) {
 	# Entering the img/src/*/
 	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn') || (!-d "${conf::img_src}/$dir") ) {
 		chdir "${conf::img_src}/${dir}/" || die "\tCannot chdir() to '$dir'; $!\n";
-		print "\n<h3 id=\"${dir::short_underscore}\">${dir::short_html}</h3>\n";
+		print OUTF "\n<h3 id=\"${dir::short_underscore}\">${dir::short_html}</h3>\n";
 
 		# Reading files in img/src/*/
 		opendir(FILE_DIR, '.');
-		my @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
+		our @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
 		# Due to arrays counting from 0 and the for-loop that begins 2
 		# line below here counting from 1 because otherwise i cannot
@@ -200,16 +220,16 @@ foreach our $dir (@img_src_dirs) {
 				if (!-e "${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]" ) {
 					system("convert ${conf::convert_args_thumb} \"$file_dir[$i]\" \"${conf::root}/${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]\"");
 				}
-				print "\t<a href=\"${conf::img_gen}/${dir::underscore}_$file_dir[$i]\">\n" if (${conf::convert_args_big});
-				print "\t\t" if (${conf::convert_args_big});
-				print "\t" if (!${conf::convert_args_big});
-				print "<img src=\"${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]\" alt=\"${dir::short} - ${img::short}\"/>\n";
-				print "\t</a>\n" if (${conf::convert_args_big});
+				print OUTF "\t<a href=\"${conf::img_gen}/${dir::underscore}_$file_dir[$i]\">\n" if (${conf::convert_args_big});
+				print OUTF "\t\t" if (${conf::convert_args_big});
+				print OUTF "\t" if (!${conf::convert_args_big});
+				print OUTF "<img src=\"${conf::img_gen}/thumb.${dir::underscore}_$file_dir[$i]\" alt=\"${dir::short} - ${img::short}\"/>\n";
+				print OUTF "\t</a>\n" if (${conf::convert_args_big});
 				#${conf::columns}
 				unless ( ${conf::columns} == 0 ) {
 					if ($i % ${conf::columns} == 0) {
-						print "\t\t<br/>\n" if (${conf::convert_args_big});
-						print "\t<br/>\n" if (!${conf::convert_args_big});
+						print OUTF "\t\t<br/>\n" if (${conf::convert_args_big});
+						print OUTF "\t<br/>\n" if (!${conf::convert_args_big});
 					}
 				}
 			}
@@ -218,11 +238,12 @@ foreach our $dir (@img_src_dirs) {
 	}
 }
 
-print "</div>\n\n";
+print OUTF "</div>\n\n";
 unless (${conf::address} eq "" || !defined ${conf::address} ) {
-	print "<address>${conf::address}</address>\n";
-	print "\n";
+	print OUTF "<address>${conf::address}</address>\n\n";
 }
-print "</body>\n";
-print "</html>\n";
+print OUTF "</body>\n";
+print OUTF "</html>\n";
+
+close(OUTF)
 
