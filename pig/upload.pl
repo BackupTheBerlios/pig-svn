@@ -19,15 +19,20 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-#use strict;
+use strict;
 use Net::FTP;
 
 package upload;
-require 'inc/config.pl';
+require 'config.pl';
 
 # perldoc perlmodlib
-my $ftp = Net::FTP->new("ftp.rhnet.is", Debug => 0);
-my $ftp->login("anonymous",'me@here.there');
-my $ftp->cwd("/");
-my $ftp->get("README");
-my $ftp->quit;  
+if (${conf::ftp_password} eq "" || !defined ${conf::ftp_password} ) {
+	print "Password: ";
+	${conf::ftp_password} = <STDIN>; chop ${conf::ftp_password};
+}
+
+my $ftp = Net::FTP->new("heim.simnet.is", Debug => 0);
+$ftp->login("${conf::ftp_user}","${conf::ftp_password}",'PIG@Pig.BerliOS.de');
+$ftp->cwd("/");
+$ftp->get("PIG.png");
+$ftp->quit; 
