@@ -1,11 +1,10 @@
-#!/usr/bin/env sh
 all:
 	@chmod +x ./css.pl
 	./css.pl
 	@chmod +x ./pig
-	./pig > index.php
+	./pig
 clean:
-	- rm index.* 
+	- rm index.php Default.htm index.html
 	- rm bxs_*.css 
 	- rm img/gen/*
 distclean: clean
