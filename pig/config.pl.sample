@@ -25,7 +25,7 @@ use Cwd;
 
 # This is used internally to determine the starting point of PIG, do not change
 # this unless you really know what you're doing.
-my $root	= getcwd();
+my $root	= Cwd::getcwd();
 
 # The source directory from which images are read.
 my $img_src		= 'img/src';
