@@ -139,7 +139,7 @@ my @img_src_dirs = readdir(IMG_SRC_DIR);
 closedir(IMG_SRC_DIR);
 foreach our $dir (sort @img_src_dirs) {
 	&gen_dir_vars;
-	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn')) {
+	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn') || (!-d "${conf::img_src}/$dir") ) {
 		&gen_dir_vars;
 		# (my $date, my $text) = split(/\s+/, $dir, 2);
 		# print "$date, $text";
@@ -157,7 +157,7 @@ closedir(IMG_SRC_DIR);
 foreach our $dir (sort @img_src_dirs) {
 	&gen_dir_vars;
 	# Entering the img/src/*/
-	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn')) {
+	unless ( ($dir eq '.') || ($dir eq '..') || ($dir eq '.svn') || (!-d "${conf::img_src}/$dir") ) {
 		chdir "${conf::img_src}/${dir}/" || die "\tCannot chdir() to '$dir'; $!\n";
 		print "\n<h6 id=\"${dir::short_underscore}\">${dir::short_html}</h6>\n";
 
@@ -168,7 +168,7 @@ foreach our $dir (sort @img_src_dirs) {
 		# This should be $file not $dir but since we need to use the $dir subroutine this is the easy way
 		foreach our $file (sort @file_dir) {
 			&gen_dir_vars;
-			unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn')) {
+			unless ( ($file eq '.') || ($file eq '..') || ($file eq '.svn') || (!-f $file) ) {
 				&gen_img_vars;
 				if (!-e "${conf::root}/${conf::img_gen}/${dir::underscore}_${file}") {
 					system("convert $conf::convert_args_big \"${file}\" \"${conf::root}/${conf::img_gen}/${dir::underscore}_${file}\"");
