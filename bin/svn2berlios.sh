@@ -35,14 +35,20 @@ function version() {
   echo "$(get_ver | head -n1)-$(get_ver | tail -n1)" | bc -l | tr -d '\n'
 }
 
-# Set proper permissions on it so that noone corrupts it while we're working 
-# on it.
-chown -R $(whoami):$(whoami) "${TMP}"
-chmod -R 755 "${TMP}"
+function fix_perms() {
+	# Set proper permissions on it so that noone corrupts it while we're working 
+	# on it.
+	chown -R $(whoami):$(whoami) "${TMP}"
+	chmod -R 755 "${TMP}"
+}
 
+fix_perms
 # Checking out the repository and rsyncing proper files in it to the proper 
 # places
-svn -q co svn://svn.berlios.de/pig/ ${TMP}/
+svn -q co svn://svn.berlios.de/pig/ ${TMP}/ &>/dev/null ||\
+svn -q co svn+ssh://svn.berlios.de/svnroot/repos/pig/ ${TMP}/
+fix_perms
+
 rsync $RSYNC_OPT --exclude=".svn" ${TMP}/htdocs/ /home/groups/pig/htdocs/
 
 # Make a new package for the ftp filearea.
