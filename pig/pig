@@ -58,9 +58,8 @@ print <<HEAD;
 	<title>${conf::title}</title>
 	<meta name="generator" content="PIG - Perl Imagegallery Generator, Perl $]V"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<link rel="stylesheet" type="text/css" href="${conf::css_prefix}css.php?scheme=Dark" title="Boxes - Dark" media="screen, projection"/>
-	<link rel="alternate stylesheet" type="text/css" href="${conf::css_prefix}css.php?scheme=Light" title="Boxes - Light" media="screen, projection"/>
-	<link rel="alternate stylesheet" type="text/css" href="${conf::css_prefix}css.php?scheme=Random" title="Boxes - Random" media="screen, projection"/>
+	<link rel="stylesheet" type="text/css" href="${conf::css_prefix}css_dark.css" title="Boxes - Dark" media="screen, projection"/>
+	<link rel="alternate stylesheet" type="text/css" href="${conf::css_prefix}css_light.css" title="Boxes - Light" media="screen, projection"/>
 </head>
 
 <body>

@@ -12,6 +12,8 @@ clean:
 distclean:
 	@echo Reverted back to distribution state.
 	rm index.* && \
+	rm config.pl || \
+	rm config.pl && \
 	rm img/gen/* || \
 	rm img/gen/* && \
 	rm img/src/* || \
