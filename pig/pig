@@ -166,6 +166,13 @@ foreach our $dir (@img_src_dirs) {
 		opendir(FILE_DIR, '.');
 		my @file_dir = sort grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
+		# Due to arrays counting from 0 and the for-loop that begins 2
+		# line below here counting from 1 because otherwise i cannot
+		# make the ${conf::columns} value be 1. This is a workaround
+		# around that bug which pushes the array forward by one
+		# inserting this string as 0, so that when the below for-loop
+		# starts counting at 1 it doesnt skip anything relevant. 
+		unshift(@file_dir, "Bugfix");
 		for ( our $i=1; $i <= ($#file_dir); $i++ ) {
 			&gen_dir_vars;
 			unless ( ($file_dir[$i] eq '.') || ($file_dir[$i] eq '..') || ($file_dir[$i] eq '.svn') || (!-f $file_dir[$i]) ) {
