@@ -163,7 +163,7 @@ foreach our $dir (sort @img_src_dirs) {
 
 		# Reading files in img/src/*/
 		opendir(FILE_DIR, '.');
-		my @file_dir = grep(( /\.png$/i && /\.gif$/i && /\.jp(e?g|e)$/i), readdir FILE_DIR);
+		my @file_dir = grep(( /\.png$/i || /\.gif$/i || /\.jp(eg|g)$/i ), readdir FILE_DIR);
 		closedir(FILE_DIR);
 		# This should be $file not $dir but since we need to use the $dir subroutine this is the easy way
 		foreach our $file (sort @file_dir) {
