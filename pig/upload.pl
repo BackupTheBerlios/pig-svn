@@ -27,19 +27,19 @@ require 'config.pl';
 
 # perldoc perlmodlib
 if (${conf::ftp_password} eq "" || !defined ${conf::ftp_password} ) {
-	print "Password: ";
+	print 'Password: ';
 	${conf::ftp_password} = <STDIN>; chop ${conf::ftp_password};
 }
 
 my $ftp = Net::FTP->new(
-	"heim.simnet.is",
+	"${conf::ftp_host}",
 	Debug => 1,
 	Port => ${conf::ftp_port},
 	Hash => 1,
 );
 $ftp->login("${conf::ftp_user}","${conf::ftp_password}",'PIG@Pig.BerliOS.de');
 # First go to the root directory
-$ftp->type("A");
+$ftp->type("A"); # ASCII
 $ftp->cwd("/");
 $ftp->mkdir("${conf::ftp_remote_dir}", "RECURSE" );
 $ftp->cwd("${conf::ftp_remote_dir}");
@@ -51,7 +51,7 @@ $ftp->cwd("${conf::img_gen}");
 # And now for uploading all the images in a for-loop
 chdir "${conf::img_gen}";
 # First we need to change to binary upload mode
-$ftp->type("I");
+$ftp->type("I"); # Binary
 
 opendir(FILE_DIR, '.');
 my @file_dir = readdir(FILE_DIR);
