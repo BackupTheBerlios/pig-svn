@@ -22,20 +22,21 @@
 use strict;
 package css;
 
-@file		= ( 'bxs_d.css','bxs_l.css',	);
-@text		= ( '#b09032',	'#600',		);
-@text_em	= ( '#d0b254',	"$text[1]",	);
-@text_hover	= ( '#b09032',	'#fff',		);
-@fg		= ( '#5F5944',	'#69c',		);
-@bg		= ( '#4b4633',	'#903',		);
-@bg_hover	= ( '#333',	'#444',		);
-@bc		= ( '#000',	'#303',		);
-@bb		= ( '1px',	'5px',		);
-@sb		= ( '1px',	'2.5px',	);
-@img_fg		= ( '#333',	'#fff',		);
-@img_fg_hover	= ( "$fg[0]",	"$fg[1]",	);
+my @file	= ( 'bxs_d.css','bxs_l.css',	);
+my @text	= ( '#b09032',	'#600',		);
+my @text_em	= ( '#d0b254',	"$text[1]",	);
+my @text_hover	= ( '#b09032',	'#fff',		);
+my @fg		= ( '#5F5944',	'#69c',		);
+my @bg		= ( '#4b4633',	'#903',		);
+my @bg_hover	= ( '#333',	'#444',		);
+my @bc		= ( '#000',	'#303',		);
+my @bb		= ( '1px',	'5px',		);
+my @sb		= ( '1px',	'2.5px',	);
+my @img_fg	= ( '#333',	'#fff',		);
+my @img_fg_hover= ( "$fg[0]",	"$fg[1]",	);
 
-for ( $i=0; $i<$#bg + 1; $i++ ) {
+#foreach my $i (0,$#bg) { # <- Perl Syntax
+for ( my $i='0'; $i<$#bg + 1; $i++ ) { # <- C Syntax
 open( OUTF, ">$file[$i]" ) or die("Can't open '$file[$i]' for writing: $!");
 print OUTF <<CSS;
 html, body {
