@@ -29,10 +29,7 @@ function version() {
 
 svn up
 
-tar -cvzf PIG-$(version).tar.gz \
+tar -czf PIG-$(version).tar.gz \
 	--exclude='.svn' \
 	--exclude="doc/test" \
-	--exclude="index.*" \
-	--exclude="img/*/*" \
-	--exclude="MPFV-*.tar.gz" \
 	*
